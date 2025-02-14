@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "ConsoleGeo/1.0.0": {
+        "dependencies": {
+          "GeoCoordinates.Core": "1.1.2"
+        },
+        "runtime": {
+          "ConsoleGeo.dll": {}
+        }
+      },
+      "GeoCoordinates.Core/1.1.2": {
+        "runtime": {
+          "lib/net8.0/GeoCoordinates.Core.dll": {
+            "assemblyVersion": "1.1.2.0",
+            "fileVersion": "1.1.2.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConsoleGeo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GeoCoordinates.Core/1.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PD8QiBHhofRqr+NTBt1gNeSzBqLDPEDwC2OwNvbqdnZ/uymwbt0pCaWQGpnNGojPG97XnhXMvVmzJR8MTZUm8Q==",
+      "path": "geocoordinates.core/1.1.2",
+      "hashPath": "geocoordinates.core.1.1.2.nupkg.sha512"
+    }
+  }
+}

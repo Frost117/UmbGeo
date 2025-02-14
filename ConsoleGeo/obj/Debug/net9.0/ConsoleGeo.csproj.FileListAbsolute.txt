@@ -1,0 +1,17 @@
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/ConsoleGeo
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/ConsoleGeo.deps.json
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/ConsoleGeo.runtimeconfig.json
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/ConsoleGeo.dll
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/ConsoleGeo.pdb
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/bin/Debug/net9.0/GeoCoordinates.Core.dll
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.csproj.AssemblyReference.cache
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.AssemblyInfoInputs.cache
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.AssemblyInfo.cs
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.csproj.CoreCompileInputs.cache
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.csproj.Up2Date
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.dll
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/refint/ConsoleGeo.dll
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.pdb
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ConsoleGeo.genruntimeconfig.cache
+/Users/frost117/RiderProjects/ConsoleGeo/ConsoleGeo/obj/Debug/net9.0/ref/ConsoleGeo.dll

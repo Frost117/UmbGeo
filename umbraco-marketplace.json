@@ -2,7 +2,7 @@
   "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
   "AuthorDetails": {
     "Name": "MrFreeze",
-    "Description": "Small time developer",
+    "Description": "Eric paints warhammer miniatures and have a passion for coding. He is primarily a front-end developer but also dabbles in back-end development. Works at Umbraco HQ",
     "Url": "https://github.com/Frost117",
     "ImageUrl": "https://ca.slack-edge.com/T025KPYEV-U5H9H8LF8-792e26be5dff-512",
     "Contributors": [
@@ -14,7 +14,7 @@
     "SyncContributorsFromRepository": false
   },
   "Category": "Developer Tools",
-  "Description": "A property editor that allows you to create a custom dropdown list that can be reused in any document type, based on .net's DayOfWeek Enum.",
+  "Description": "A package that gives you a property editor for Geo Coordinates.",
   "DiscussionForumUrl": "https://github.com/Frost117/UmbGeo/discussions",
   "LicenseTypes": [ "Free" ],
   "IssueTrackerUrl": "https://github.com/Frost117/UmbGeo/issues",

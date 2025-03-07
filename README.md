@@ -1,6 +1,6 @@
 # UmbGeo
 
-A package that gives you a property editor for GeoCoordinate.
+A package that gives you a property editor for Geo Coordinates.
 
 Since .net core 3.0, the `System.Device.Location` namespace is no longer available. This package provides a property editor for the `GeoCoordinate` class.
 

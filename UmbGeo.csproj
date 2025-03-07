@@ -20,7 +20,11 @@
     <RepositoryType>git</RepositoryType>
     <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <None Update="logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="GeoCoordinates.Core" Version="1.1.2" />
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.7.0" />

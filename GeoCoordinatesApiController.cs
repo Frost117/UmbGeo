@@ -3,7 +3,7 @@ using Umbraco.Cms.Web.BackOffice.Filters;
 using Umbraco.Cms.Web.Common.Attributes;
 using GeoCoordinates.Core;
 
-namespace UmbracoProject
+namespace UmbGeo
 {
     [ValidateAngularAntiForgeryToken]
     [PluginController("GeoCoordinates")]

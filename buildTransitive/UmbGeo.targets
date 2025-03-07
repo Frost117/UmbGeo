@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UmbGeoContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\UmbGeo\**\*.*</UmbGeoContentFilesPath>
+  </PropertyGroup>
+
+  <Target Name="CopyUmbGeoAssets" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <UmbGeoContentFiles Include="$(UmbGeoContentFilesPath)" />
+    </ItemGroup>
+    <Message Text="Copying UmbGeo files: $(UmbGeoContentFilesPath) - #@(UmbGeoContentFiles->Count()) files" Importance="high" />
+    <Copy SourceFiles="@(UmbGeoContentFiles)" DestinationFiles="@(UmbGeoContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\UmbGeo\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="ClearUmbGeoAssets" BeforeTargets="Clean">
+    <ItemGroup>
+      <UmbGeoDir Include="$(MSBuildProjectDirectory)\App_Plugins\UmbGeo\" />
+    </ItemGroup>
+    <Message Text="Clear old UmbGeo data" Importance="high" />
+    <RemoveDir Directories="@(UmbGeoDir)" />
+  </Target>
+</Project>

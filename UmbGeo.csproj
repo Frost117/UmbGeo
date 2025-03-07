@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ContentTargetFolders>.</ContentTargetFolders>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>UmbGeo</PackageId>
+    <Product>UmbGeo</Product>
+    <Title>UmbGeo</Title>
+    <Description>...</Description>
+    <PackageTags>umbraco plugin package</PackageTags>
+    <Authors>MrFreeze</Authors>
+    <PackageProjectUrl>https://github.com/Frost117/UmbGeo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Frost117/UmbGeo</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>logo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoCoordinates.Core" Version="1.1.2" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.7.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.7.0" />
+    <None Include="README.md" Pack="true" PackagePath=""/>
+    <None Include="LICENSE" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include=".github\workflows\release.yml" />
+    <Content Include="App_Plugins\UmbGeo\**" ExcludeFromSingleFile="true" CopyToPublishDirectory="Always" />
+    <None Include="buildTransitive\**" Pack="true" PackagePath="buildTransitive" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+</Project>

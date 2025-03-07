@@ -1,0 +1,33 @@
+{
+        "id": "UmbGeo",
+        "name": "UmbGeo",
+        "version": "0.0.1",
+        "allowPackageTelemetry": true,
+        propertyEditors: [
+            {
+                alias: "UmbGeo",
+                name: "UmbGeo",
+                icon: "icon-map",
+                group: "Rich Content",
+                editor: {
+                    view: "~/App_Plugins/UmbGeo/index.html"
+                },
+                prevalues: {
+                    fields: [
+                        {
+                            label: "Geo Location",
+                            description: "Geo location",
+                            key: "umbGeo",
+                            "view": "~/App_Plugins/UmbGeo/index.html"
+                        }
+                    ]
+                }
+            }
+        ],
+        javascript: [
+            '~/App_Plugins/UmbGeo/index.js'
+        ],
+        css: [
+            '~/App_Plugins/UmbGeo/styles.css'
+        ]
+}

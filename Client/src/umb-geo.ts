@@ -1,15 +1,15 @@
 import { LitElement, html, customElement, property } from '@umbraco-cms/backoffice/external/lit';
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
-import {  UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
-import {UMB_AUTH_CONTEXT, UmbAuthContext} from "@umbraco-cms/backoffice/auth";
+import { UMB_AUTH_CONTEXT, UmbAuthContext } from "@umbraco-cms/backoffice/auth";
 
 @customElement('geo-location')
-export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMixin(LitElement) implements UmbPropertyEditorUiElement{
-    public get value(){
-        return this.coordinates
+export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMixin(LitElement) implements UmbPropertyEditorUiElement {
+    public get value() {
+        return this.coordinates;
     }
-    
+
     public set value(value) {
         if (value) {
             this.coordinates = value;
@@ -17,10 +17,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             console.warn('Attempted to set coordinates to undefined.');
         }
     }
-    
+
     @property()
-    public geoAuthToken: Promise<string> | undefined
-    
+    public geoAuthToken: Promise<string> | undefined;
 
     @property({ attribute: false })
     public set config(config: UmbPropertyEditorConfigCollection | undefined) {
@@ -44,6 +43,7 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             console.warn('defaultGeolocation not found. Using existing coordinates:', this.coordinates);
         }
     }
+
     @property({ type: Boolean })
     private _validationState: { isLatitudeValid: boolean; isLongitudeValid: boolean; isElevationValid: boolean, isValid: boolean } = {
         isLatitudeValid: true,
@@ -58,7 +58,7 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         longitude: 0,
         elevation: 0,
     };
-    
+
     private _authContext: UmbAuthContext | undefined;
 
     #onInput(e: InputEvent, field: 'latitude' | 'longitude' | 'elevation') {
@@ -67,10 +67,10 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             ...this.coordinates,
             [field]: value,
         };
-    
+
         this.#validateCoordinates();
     }
-    
+
     #onChange(e: Event, field: 'latitude' | 'longitude' | 'elevation') {
         const value = parseFloat((e.target as HTMLInputElement).value);
         this.coordinates = {
@@ -83,20 +83,21 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             console.warn('Cannot save invalid coordinates:', this.coordinates);
         }
     }
-    
-    #dispatchChangeEvent(){
+
+    #dispatchChangeEvent() {
         this.dispatchEvent(new UmbChangeEvent());
     }
 
     constructor() {
         super();
-        this.consumeContext(UMB_AUTH_CONTEXT,(context) =>{
+        this.consumeContext(UMB_AUTH_CONTEXT, (context) => {
             this._authContext = context;
             if (this._authContext) {
                 this.geoAuthToken = this._authContext.getLatestToken();
             }
-        } )
+        });
     }
+
     render() {
         return html`
         <div class="coordinate">
@@ -144,7 +145,6 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
     async connectedCallback() {
         super.connectedCallback();
 
-
         await this.#validateCoordinates();
 
         this.consumeContext(UMB_AUTH_CONTEXT, (context) => {
@@ -157,38 +157,47 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
 
     async #validateCoordinates() {
         if (!this._authContext) return;
-    
+
         const token = await this._authContext.getLatestToken();
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-    
+
         try {
             const response = await fetch(
                 `/AreCoordinatesValid?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&elevation=${this.coordinates.elevation}`,
                 { headers }
             );
+
+            if (!response.ok) {
+                console.error('Validation error: Unable to validate coordinates.');
+                this._validationState = {
+                    isLatitudeValid: false,
+                    isLongitudeValid: false,
+                    isElevationValid: false,
+                    isValid: false,
+                };
+                return;
+            }
+
             const results = await response.json();
-    
             this._validationState = {
                 isLatitudeValid: results.isLatitudeValid,
                 isLongitudeValid: results.isLongitudeValid,
                 isElevationValid: results.isElevationValid,
                 isValid: results.isValid,
             };
-    
+
             console.log('Validation results:', this._validationState);
         } catch (error) {
             console.error('Error validating coordinates:', error);
         }
     }
-
 }
 
-
 declare global {
-        interface HTMLElementTagNameMap {
-            'geo-location': UmbGeoLocationPropertyEditorUIElement;
+    interface HTMLElementTagNameMap {
+        'geo-location': UmbGeoLocationPropertyEditorUIElement;
     }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "umb-geo",
   "private": true,
-  "version": "1.0.0",
+  "version": "15.0.0",
   "type": "module",
   "scripts": {
     "watch": "tsc && vite build --watch",

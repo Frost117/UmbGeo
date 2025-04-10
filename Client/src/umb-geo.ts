@@ -99,10 +99,17 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
     }
     render() {
         return html`
+        <style>
+            .error-message {
+                display: inline; /* Make the <p> tag inline */
+                color: red; /* Optional: Add color for better visibility */
+                margin-left: 8px; /* Optional: Add spacing between input and error message */
+            }
+        </style>
         <div class="coordinate">
             <uui-input 
                 type="number"
-                label="Latitude Value:" 
+                step="0.0001"
                 placeholder="Latitude"
                 min="-90"
                 max="90"
@@ -111,11 +118,13 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 @change="${(e: Event) => this.#onChange(e, 'latitude')}"
                 .error="${!this._validationState.isLatitudeValid}"
             ></uui-input>
+            ${!this._validationState.isLatitudeValid ? html`<p class="error-message">Latitude must be between -90 and 90.</p>` : ''}
         </div>
         <div class="coordinate">
             <uui-input 
                 type="number"
-                label="Longitude Value:" 
+                step="0.0001"
+                label="Longitude Value" 
                 placeholder="Longitude"
                 min="-180"
                 max="180"
@@ -123,20 +132,21 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 @input="${(e: InputEvent) => this.#onInput(e, 'longitude')}"
                 @change="${(e: Event) => this.#onChange(e, 'longitude')}"
                 .error="${!this._validationState.isLongitudeValid}"
-            ></uui-input>
+            ></uui-input> 
         </div>
         <div class="coordinate">
             <uui-input 
                 type="number"
+                step="0.0001"
                 max="8850"
                 min="-420"
-                label="Elevation Value:" 
                 placeholder="Elevation"
                 .value="${this.coordinates.elevation}"
                 @input="${(e: InputEvent) => this.#onInput(e, 'elevation')}"
                 @change="${(e: Event) => this.#onChange(e, 'elevation')}"
                 .error="${!this._validationState.isElevationValid}"
             ></uui-input>
+            ${!this._validationState.isElevationValid ? html`<p class="error-message">Elevation must be between -420 and 8850.</p>` : ''}
         </div>
         `;
     }

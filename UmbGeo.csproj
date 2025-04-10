@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,10 +9,21 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
+=======
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+  </PropertyGroup>
+  
+>>>>>>> 40b116ff61f657dc3d7d3eb3961127ed41514464
   <PropertyGroup>
     <PackageId>UmbGeo</PackageId>
     <Product>UmbGeo</Product>
     <Title>UmbGeo</Title>
+<<<<<<< HEAD
     <Description>...</Description>
     <PackageTags>umbraco plugin package umbraco-marketplace</PackageTags>
     <Authors>MrFreeze</Authors>
@@ -42,4 +54,29 @@
   <ItemGroup>
     <Folder Include="images\" />
   </ItemGroup>
+=======
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />  
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
+    <PackageReference Include="GeoCoordinates.Core" Version="*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Dont include the client folder as part of packaging nuget build -->
+    <Content Remove="Client\**" />
+
+    <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
+    <None Include="Client\public\umbraco-package.json" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+  
+
+>>>>>>> 40b116ff61f657dc3d7d3eb3961127ed41514464
 </Project>

@@ -15,7 +15,7 @@
         "label": "Geo Location",
         "icon": "icon-locate",
         "group": "common",
-        "propertyEditorSchemaAlias": "Umbraco.Plain.Json",
+        "propertyEditorSchemaAlias": "Umbraco.String",
         "settings": {
           "properties": [
             {

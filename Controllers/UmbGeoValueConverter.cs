@@ -7,7 +7,7 @@ namespace UmbGeo;
 
 public sealed class GeoCoordinatesConverter : IPropertyValueConverter
 {
-    public bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorUiAlias == "UmbGeo";
+    public bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorUiAlias == "UmbGeo.Location";
     public object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) => inter!;
 
     public object ConvertIntermediateToXPath(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) 
@@ -17,7 +17,7 @@ public sealed class GeoCoordinatesConverter : IPropertyValueConverter
     
     public object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
     { 
-        if (source == null) throw new NullReferenceException(source?.ToString());
+        if (source == null) return null;
          Coordinate converted = JsonConvert.DeserializeObject<Coordinate>(source.ToString()!)!;
          return converted ?? throw new NullReferenceException();
     }

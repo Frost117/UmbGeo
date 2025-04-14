@@ -2,7 +2,7 @@
   "$schema": "../umbraco-package-schema.json",
   "id": "UmbGeo-Location",
   "name": "UmbGeo Location",
-  "version": "1.0.0",
+  "version": "15.0.0",
   "allowPackageTelemetry": true,
   "extensions": [
     {

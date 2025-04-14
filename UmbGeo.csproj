@@ -26,6 +26,8 @@
     <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
     <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
+    <None Include="README.md" Pack="true" PackagePath=""/>
+    <None Include="LICENSE" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild">

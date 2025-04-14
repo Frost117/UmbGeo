@@ -27,10 +27,6 @@
     <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
     <None Include="Client\public\umbraco-package.json" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
 <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
 	  <Exec Command="npm install" WorkingDirectory="Client\UmbracoDayOfWeek" />

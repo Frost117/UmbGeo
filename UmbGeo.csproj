@@ -31,6 +31,15 @@
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
+
+<Target Name="NpmBuild" BeforeTargets="BeforeBuild">
+	  <Exec Command="npm install" WorkingDirectory="Client\UmbracoDayOfWeek" />
+	  <Exec Command="npm run build" WorkingDirectory="Client\UmbracoDayOfWeek" />
+  </Target>
+
+	<Target Name="NpmRemove" AfterTargets="AfterBuild">
+		<RemoveDir Directories="Client\UmbracoDayOfWeek\node_modules" />
+	</Target>
   
 
 </Project>

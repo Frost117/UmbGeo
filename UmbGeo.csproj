@@ -10,6 +10,14 @@
     <PackageId>UmbGeo</PackageId>
     <Product>UmbGeo</Product>
     <Title>UmbGeo</Title>
+    <PackageTags>umbraco plugin package umbraco-marketplace</PackageTags>
+    <Authors>MrFreeze</Authors>
+    <PackageProjectUrl>https://github.com/Frost117/UmbGeo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Frost117/UmbGeo/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   
   <ItemGroup>

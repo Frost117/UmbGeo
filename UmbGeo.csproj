@@ -19,7 +19,16 @@
     <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
   </ItemGroup>
-  
+
+  <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
+    <Exec Command="npm install" WorkingDirectory="Client\" />
+    <Exec Command="npm run build" WorkingDirectory="Client\" />
+  </Target>
+
+  <Target Name="NpmRemove" AfterTargets="AfterBuild">
+    <RemoveDir Directories="Client\node_modules" />
+  </Target>
+
   <ItemGroup>
     <!-- Dont include the client folder as part of packaging nuget build -->
     <Content Remove="Client\**" />
@@ -27,19 +36,9 @@
     <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
     <None Include="Client\public\umbraco-package.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
-
-<Target Name="NpmBuild" BeforeTargets="BeforeBuild">
-	  <Exec Command="npm install" WorkingDirectory="Client\" />
-	  <Exec Command="npm run build" WorkingDirectory="Client\" />
-  </Target>
-
-	<Target Name="NpmRemove" AfterTargets="AfterBuild">
-		<RemoveDir Directories="Client\node_modules" />
-	</Target>
-  
 
 </Project>

@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -49,7 +49,7 @@
     <Content Remove="Client\**" />
 
     <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
-    <None Include="Client\public\umbraco-package.json" />
+    <None Include="Client\public\umbraco-package.json" Pack="false" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,6 +19,10 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <UmbracoCmsPackageVersion>[15.0.0, 15.999.999)</UmbracoCmsPackageVersion>
+  </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />  
@@ -28,6 +32,7 @@
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
     <None Include="README.md" Pack="true" PackagePath=""/>
     <None Include="LICENSE" Pack="true" PackagePath=""/>
+    <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild">

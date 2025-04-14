@@ -52,8 +52,4 @@
     <None Include="Client\public\umbraco-package.json" Pack="false" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
 </Project>

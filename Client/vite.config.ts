@@ -1,17 +1,20 @@
 import { defineConfig } from "vite";
 
-export default defineConfig({
-  build: {
-    lib: {
-      entry: "src/umb-geo.ts", // Property file
-      formats: ["es"],
-      fileName: "umb-geo",
+export default defineConfig(({ command} ) => {
+  const buildMode = process.env.build_mode?.trim();
+
+  return {
+    build: {
+      lib: {
+        entry: "src/umb-geo.ts", // Property file
+        formats: ["es"],
+        fileName: "umb-geo",
+      },
+      outDir: "../wwwroot/App_Plugins/UmbGeo/dist", // your web component will be saved in this location
+      sourcemap: buildMode == 'development' ? true : false,
+      rollupOptions: {
+        external: [/^@umbraco/],
+      },
     },
-    outDir: "../wwwroot/App_Plugins/UmbGeo", // your web component will be saved in this location
-    emptyOutDir: true,
-    sourcemap: true,
-    rollupOptions: {
-      external: [/^@umbraco/],
-    },
-  },
+  }
 });

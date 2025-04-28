@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StaticWebAssetBasePath>App_Plugins/UmbGeo</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -35,21 +35,32 @@
     <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
-    <Exec Command="npm install" WorkingDirectory="Client\" />
-    <Exec Command="npm run build" WorkingDirectory="Client\" />
-  </Target>
-
-  <Target Name="NpmRemove" AfterTargets="AfterBuild">
-    <RemoveDir Directories="Client\node_modules" />
-  </Target>
-
   <ItemGroup>
-    <!-- Dont include the client folder as part of packaging nuget build -->
-    <Content Remove="Client\**" />
-
-    <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
-    <None Include="Client\public\umbraco-package.json" Pack="false" />
+    <Compile Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
+    <Content Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
+    <EmbeddedResource Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
+    <None Remove="wwwroot\App_Plugins\UmbGeodist\**" />
   </ItemGroup>
+  <Target Name="PreBuildClientRelease" BeforeTargets="PreBuild" Condition="$(ConfigurationName) == Release">
+    <Message Text="Building client side assets using npm." Importance="High" />
+    <Exec Command="npm install" WorkingDirectory="Client/" />
+    <Exec Command="npm run build" WorkingDirectory="Client/" />
+    <!-- Ensure nothing from /Client is included in the build artifact -->
+    <ItemGroup>
+      <Compile Remove="Client\**" />
+      <Content Remove="Client\**" />
+      <EmbeddedResource Remove="Client\**" />
+      <None Remove="Client\**" />
+
+      <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
+      <None Include="Client\public\umbraco-package.json" Pack="false" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="wwwroot\App_Plugins\UmbGeo\dist\**" />
+    </ItemGroup>
+  </Target>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="$(ConfigurationName) != DebugNoClientSideBuild">
+    <Message Text="Client side code was built." Importance="High" />
+  </Target>
 
 </Project>

@@ -7,7 +7,7 @@ export default defineConfig({
       formats: ["es"],
       fileName: "umb-geo",
     },
-    outDir: "../wwwroot/App_Plugins/UmbGeo", // your web component will be saved in this location
+    outDir: "dist", // your web component will be saved in this location
     emptyOutDir: true,
     sourcemap: true,
     rollupOptions: {

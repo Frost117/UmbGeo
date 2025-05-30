@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 /.vscode
 Client/package-lock.json
 UmbGeo.sln
+
+# Ignore the front-end files
+/wwwroot/UmbGeo/dist/

@@ -482,7 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-wwwroot
 /.vscode
 Client/package-lock.json
 UmbGeo.sln

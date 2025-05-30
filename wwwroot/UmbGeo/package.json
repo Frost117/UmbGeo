@@ -1,0 +1,22 @@
+{
+  "name": "umb-geo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "watch": "tsc && vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@umbraco-cms/backoffice": "^15.2.3",
+    "chalk": "^5.3.0",
+    "cross-env": "^7.0.3",
+    "node-fetch": "^3.3.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9",
+    "@types/node": "^20.12.12"
+  },
+  "dependencies": {
+    "lit": "^3.1.2"
+  }
+}

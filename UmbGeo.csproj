@@ -3,6 +3,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ContentTargetFolders>.</ContentTargetFolders>
+    <EnablePackageValidation>false</EnablePackageValidation>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
   
@@ -35,12 +37,6 @@
     <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
-    <Content Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
-    <EmbeddedResource Remove="wwwroot\App_Plugins\UmbGeo\dist\**" />
-    <None Remove="wwwroot\App_Plugins\UmbGeodist\**" />
-  </ItemGroup>
   <Target Name="PreBuildClientRelease" BeforeTargets="PreBuild" Condition="$(ConfigurationName) == Release">
     <Message Text="Building client side assets using npm." Importance="High" />
     <Exec Command="npm install" WorkingDirectory="Client/" />
@@ -56,7 +52,7 @@
       <None Include="Client\public\umbraco-package.json" Pack="false" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="wwwroot\App_Plugins\UmbGeo\dist\**" />
+      <Content Include="wwwroot\UmbGeo\dist\**" />
     </ItemGroup>
   </Target>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="$(ConfigurationName) != DebugNoClientSideBuild">

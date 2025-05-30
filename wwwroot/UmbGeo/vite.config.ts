@@ -8,13 +8,13 @@ export default defineConfig(({ command} ) => {
       lib: {
         entry: "src/umb-geo.ts", // Property file
         formats: ["es"],
-        fileName: "umb-geo",
       },
-      outDir: "dist", // your web component will be saved in this location
-      sourcemap: buildMode == 'development' ? true : false,
-      rollupOptions: {
-        external: [/^@umbraco/],
-      },
+      outDir: "dist", // all compiled files will be placed here
+        emptyOutDir: true,
+        sourcemap: true,
+        rollupOptions: {
+            external: [/^@umbraco/], // ignore the Umbraco Backoffice package in the build
+        }
     },
   }
 });

@@ -37,26 +37,14 @@
     <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <Target Name="PreBuildClientRelease" BeforeTargets="PreBuild" Condition="$(ConfigurationName) == Release">
-    <Message Text="Building client side assets using npm." Importance="High" />
-    <Exec Command="npm install" WorkingDirectory="Client/" />
-    <Exec Command="npm run build" WorkingDirectory="Client/" />
-    <!-- Ensure nothing from /Client is included in the build artifact -->
-    <ItemGroup>
-      <Compile Remove="Client\**" />
-      <Content Remove="Client\**" />
-      <EmbeddedResource Remove="Client\**" />
-      <None Remove="Client\**" />
+  <Target Name="PreBuildClientRelease" BeforeTargets="PreBuild">
+    <Exec Command="npm install" WorkingDirectory="wwwroot\UmbGeo" />
+    <Exec Command="npm run build" WorkingDirectory="wwwroot\UmbGeo" />
+  </Target>
 
-      <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
-      <None Include="Client\public\umbraco-package.json" Pack="false" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="wwwroot\UmbGeo\dist\**" />
-    </ItemGroup>
+  <Target Name="PostBuildClientRelease" AfterTargets="PostBuild">
+    <RemoveDir Directories="wwwroot\UmbGeo\node_modules" />
   </Target>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="$(ConfigurationName) != DebugNoClientSideBuild">
-    <Message Text="Client side code was built." Importance="High" />
-  </Target>
+
 
 </Project>

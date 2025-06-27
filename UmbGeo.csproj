@@ -37,12 +37,12 @@
     <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <Target Name="PreBuildClientRelease" BeforeTargets="PreBuild">
+  <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
     <Exec Command="npm install" WorkingDirectory="wwwroot\UmbGeo" />
     <Exec Command="npm run build" WorkingDirectory="wwwroot\UmbGeo" />
   </Target>
 
-  <Target Name="PostBuildClientRelease" AfterTargets="PostBuild">
+  <Target Name="PostBuildClientRelease" AfterTargets="AfterBuild">
     <RemoveDir Directories="wwwroot\UmbGeo\node_modules" />
   </Target>
 

@@ -9,11 +9,11 @@ export default defineConfig(({ command} ) => {
         entry: "src/umb-geo.ts", // Property file
         formats: ["es"],
       },
-      outDir: "dist", // all compiled files will be placed here
-        emptyOutDir: true,
-        sourcemap: true,
-        rollupOptions: {
-            external: [/^@umbraco/], // ignore the Umbraco Backoffice package in the build
+      outDir: "../wwwroot/App_Plugins/UmbGeo", // all compiled files will be placed here
+      emptyOutDir: true,
+      sourcemap: true,
+      rollupOptions: {
+          external: [/^@umbraco/], // ignore the Umbraco Backoffice package in the build
         }
     },
   }

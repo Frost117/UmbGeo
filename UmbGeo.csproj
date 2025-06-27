@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ContentTargetFolders>.</ContentTargetFolders>
     <EnablePackageValidation>false</EnablePackageValidation>
-    <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UmbracoCmsPackageVersion>[15.0.0, 15.999.999)</UmbracoCmsPackageVersion>
+    <UmbracoCmsPackageVersion>[15.4.0, 15.999.999)</UmbracoCmsPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,18 +32,25 @@
     <PackageReference Include="Umbraco.Cms.Api.Common" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Api.Management" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
+    
+    <!-- Dont include the client folder as part of packaging nuget build -->
+    <Content Remove="Client\**" />
+
+    <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
+    <None Include="Client\public\umbraco-package.json" Pack="false" />
+    
     <None Include="README.md" Pack="true" PackagePath=""/>
     <None Include="LICENSE" Pack="true" PackagePath=""/>
     <None Update="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
-    <Exec Command="npm install" WorkingDirectory="wwwroot\UmbGeo" />
-    <Exec Command="npm run build" WorkingDirectory="wwwroot\UmbGeo" />
+    <Exec Command="npm install" WorkingDirectory="Client\UmbGeo" />
+    <Exec Command="npm run build" WorkingDirectory="Client\UmbGeo" />
   </Target>
 
   <Target Name="PostBuildClientRelease" AfterTargets="AfterBuild">
-    <RemoveDir Directories="wwwroot\UmbGeo\node_modules" />
+    <RemoveDir Directories="Client\UmbGeo\node_modules" />
   </Target>
 
 

@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ContentTargetFolders>.</ContentTargetFolders>
     <EnablePackageValidation>false</EnablePackageValidation>
-    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -25,12 +25,12 @@
   <PropertyGroup>
     <UmbracoCmsPackageVersion>[15.0.0, 15.999.999)</UmbracoCmsPackageVersion>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />  
-    <PackageReference Include="Umbraco.Cms.Web.Common" Version="*" />
-    <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
-    <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="$(UmbracoCmsPackageVersion)" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="$(UmbracoCmsPackageVersion)" />
+    <PackageReference Include="Umbraco.Cms.Api.Common" Version="$(UmbracoCmsPackageVersion)" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
     <None Include="README.md" Pack="true" PackagePath=""/>
     <None Include="LICENSE" Pack="true" PackagePath=""/>

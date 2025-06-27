@@ -9,7 +9,7 @@
       "type": "propertyEditorUi",
       "alias": "UmbGeo.Location",
       "name": "Geo Location",
-      "element": "/app_plugins/UmbGeo/dist/umb-geo.js",
+      "element": "/App_Plugins/UmbGeo/umb-geo.js",
       "elementName": "UmbGeo-Location",
       "meta": {
         "label": "Geo Location",

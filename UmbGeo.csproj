@@ -47,6 +47,11 @@
     <Message Text="Executing NPM build..." Importance="high" />
     <Exec Command="npm install" WorkingDirectory="Client" />
     <Exec Command="npm run build" WorkingDirectory="Client" />
+
+    <!-- Include the newly created files from wwwroot in the build -->
+    <ItemGroup>
+      <Content Include="wwwroot\**" />
+    </ItemGroup>
   </Target>
 
 </Project>

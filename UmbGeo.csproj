@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <!-- This target runs the Vite build before the .NET build, which populates the wwwroot folder -->
-  <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
+  <Target Name="NpmBuild" BeforeTargets="CollectStaticWebAssetsToPublish">
     <Message Text="Executing NPM build..." Importance="high" />
     <Exec Command="npm install" WorkingDirectory="Client" />
     <Exec Command="npm run build" WorkingDirectory="Client" />

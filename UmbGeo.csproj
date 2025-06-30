@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StaticWebAssetBasePath>App_Plugins/UmbGeo</StaticWebAssetBasePath>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <PackageId>UmbGeo</PackageId>
     <Product>UmbGeo</Product>
@@ -25,35 +25,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Client\.vscode\extensions.json" />
-    <Content Include="Client\package.json" />
-    <Content Include="Client\tsconfig.json" />
+    <!-- Package References -->
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Api.Common" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Api.Management" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="GeoCoordinates.Core" Version="*" />
-    
-    <!-- Dont include the client folder as part of packaging nuget build -->
-    <Content Remove="Client\**" />
 
-    <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
-    <None Include="Client\public\umbraco-package.json" Pack="false" />
-    
-    <None Include="README.md" Pack="true" PackagePath=""/>
-    <None Include="LICENSE" Pack="true" PackagePath=""/>
-    <None Update="logo.png" Pack="true" PackagePath="" />
+    <!-- Exclude client-side source files from the package -->
+    <Content Remove="Client\**" />
+    <None Remove="Client\**" />
+
+    <!-- Include files for NuGet package metadata -->
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+    <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
-
+  <!-- This target runs the Vite build before the .NET build, which populates the wwwroot folder -->
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
+    <Message Text="Executing NPM build..." Importance="high" />
     <Exec Command="npm install" WorkingDirectory="Client" />
     <Exec Command="npm run build" WorkingDirectory="Client" />
   </Target>
-
-  <Target Name="PostBuildClientRelease" AfterTargets="AfterBuild">
-    <RemoveDir Directories="Client\node_modules" />
-  </Target>
-
 
 </Project>

@@ -25,7 +25,7 @@ jobs:
       - name: Set VERSION variable from tag
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Pack
-        run: dotnet pack --configuration Release /p:Version=${VERSION}
+        run: dotnet pack --configuration Release /p:Version=${VERSION} --output .
       - name: Push
         run: dotnet nuget push UmbGeo.${VERSION}.nupkg --api-key ${NUGET_API_KEY} --source https://api.nuget.org/v3/index.json
         env:

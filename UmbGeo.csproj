@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>App_Plugins/UmbGeo</StaticWebAssetBasePath>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -25,6 +25,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Client\.vscode\extensions.json" />
+    <Content Include="Client\package.json" />
+    <Content Include="Client\tsconfig.json" />
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="$(UmbracoCmsPackageVersion)" />
     <PackageReference Include="Umbraco.Cms.Api.Common" Version="$(UmbracoCmsPackageVersion)" />
@@ -44,12 +47,12 @@
 
 
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild">
-    <Exec Command="npm install" WorkingDirectory="Client\UmbGeo" />
-    <Exec Command="npm run build" WorkingDirectory="Client\UmbGeo" />
+    <Exec Command="npm install" WorkingDirectory="Client" />
+    <Exec Command="npm run build" WorkingDirectory="Client" />
   </Target>
 
   <Target Name="PostBuildClientRelease" AfterTargets="AfterBuild">
-    <RemoveDir Directories="Client\UmbGeo\node_modules" />
+    <RemoveDir Directories="Client\node_modules" />
   </Target>
 
 

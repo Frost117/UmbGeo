@@ -24,6 +24,9 @@ Displays the distance between the current geolocation and the given coordinate i
 @Model.PropertyEditor.GetDistanceTo(new Coordinate(4, 20, 10))
 ```
 
+> [!NOTE]
+> If you are using this helper method, you will need to import the library `GeoCoordinates.Core`
+
 ---------------------------
 
 ### IsWithinDistanceTo()
@@ -33,6 +36,8 @@ Returns a bool that checks if the current coordinates are within the given dista
 ```csharp
 @Model.PropertyEditor.IsWithinDistanceTo(new Coordinate(4, 20, 10), 1000)`
 ```
+> [!NOTE]
+> If you are using this helper method, you will need to import the library `GeoCoordinates.Core`
 
 ---------------------------
 

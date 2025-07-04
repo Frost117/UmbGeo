@@ -105,37 +105,65 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 color: red; /* Optional: Add color for better visibility */
                 margin-left: 8px; /* Optional: Add spacing between input and error message */
             }
+            .extra {
+                user-select: none;
+                height: 100%;
+                min-width: 75px;
+                padding: 0 var(--uui-size-3);
+                background: #f3f3f3;
+                color: grey;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .extra:first-child {
+                border-right: 1px solid
+                var(--uui-input-border-color, var(--uui-color-border));
+            }
+            * + .extra {
+                border-left: 1px solid
+                var(--uui-input-border-color, var(--uui-color-border));
+            }
+            .coordinate-input {
+                min-width: 230px;
+            }
+            .coordinate{
+                padding-bottom: 2px;
+            }
         </style>
         <div class="coordinate">
-            <uui-input 
+            <uui-input
+                class="coordinate-input"
                 type="number"
                 step="0.0001"
-                placeholder="Latitude"
                 min="-90"
                 max="90"
                 .value="${this.coordinates.latitude}"
                 @input="${(e: InputEvent) => this.#onInput(e, 'latitude')}"
                 @change="${(e: Event) => this.#onChange(e, 'latitude')}"
                 .error="${!this._validationState.isLatitudeValid}"
-            ></uui-input>
+            ><div class="extra" slot="prepend">Latitude</div>
+            </uui-input>
             ${!this._validationState.isLatitudeValid ? html`<p class="error-message">Latitude must be between -90 and 90.</p>` : ''}
         </div>
         <div class="coordinate">
-            <uui-input 
+            <uui-input
+                class="coordinate-input"
                 type="number"
                 step="0.0001"
-                label="Longitude Value" 
-                placeholder="Longitude"
                 min="-180"
                 max="180"
                 .value="${this.coordinates.longitude}"
                 @input="${(e: InputEvent) => this.#onInput(e, 'longitude')}"
                 @change="${(e: Event) => this.#onChange(e, 'longitude')}"
                 .error="${!this._validationState.isLongitudeValid}"
-            ></uui-input> 
+            ><div class="extra" slot="prepend">Longitude</div>
+            </uui-input>
+            ${!this._validationState.isLongitudeValid ? html`<p class="error-message">Latitude must be between -180 and 180.</p>` : ''}
         </div>
         <div class="coordinate">
-            <uui-input 
+            <uui-input
+                class="coordinate-input"
                 type="number"
                 step="0.0001"
                 max="8850"
@@ -145,7 +173,8 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 @input="${(e: InputEvent) => this.#onInput(e, 'elevation')}"
                 @change="${(e: Event) => this.#onChange(e, 'elevation')}"
                 .error="${!this._validationState.isElevationValid}"
-            ></uui-input>
+            ><div class="extra" slot="prepend">Elevation</div>
+            </uui-input>
             ${!this._validationState.isElevationValid ? html`<p class="error-message">Elevation must be between -420 and 8850.</p>` : ''}
         </div>
         `;
@@ -153,7 +182,6 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
 
     async connectedCallback() {
         super.connectedCallback();
-
 
         await this.#validateCoordinates();
 
@@ -187,7 +215,6 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 isValid: results.isValid,
             };
     
-            console.log('Validation results:', this._validationState);
         } catch (error) {
             console.error('Error validating coordinates:', error);
         }

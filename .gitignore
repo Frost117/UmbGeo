@@ -488,3 +488,7 @@ UmbGeo.sln
 # Ignore the front-end files
 /wwwroot/UmbGeo/dist/
 wwwroot/UmbGeo/package-lock.json
+/Client/package-lock.json
+/wwwroot/App_Plugins/UmbGeo/umb-geo.js
+/wwwroot/App_Plugins/UmbGeo/umb-geo.js.map
+/wwwroot/App_Plugins/UmbGeo/umbraco-package.json

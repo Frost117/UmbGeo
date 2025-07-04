@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StaticWebAssetBasePath>App_Plugins/UmbGeo</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -41,9 +41,9 @@
     <None Include="LICENSE" Pack="true" PackagePath="" />
     <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
-
+  
   <!-- This target runs the Vite build before the .NET build, which populates the wwwroot folder -->
-  <Target Name="NpmBuild" BeforeTargets="CollectStaticWebAssetsToPublish">
+  <Target Name="NpmBuild" BeforeTargets="BeforeBuild" AfterTargets="ResolveReferences">
     <Message Text="Executing NPM build..." Importance="high" />
     <Exec Command="npm install" WorkingDirectory="Client" />
     <Exec Command="npm run build" WorkingDirectory="Client" />

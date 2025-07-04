@@ -13,7 +13,16 @@
   "LicenseTypes": [ "Free" ],
   "IssueTrackerUrl": "https://github.com/Frost117/UmbGeo/issues",
   "PackageType": "Package",
-  "Screenshots": [],
+  "Screenshots": [
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/Frost117/UmbGeo/main/Media/BackOfficeEditor.png",
+      "Caption": "Umbraco Geolocation Coordinates Property Editor"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/Frost117/UmbGeo/main/Media/BackOfficeEditorValidation.png",
+      "Caption": "Umbraco Geolocation Coordinates Property Editor with validation"
+    }
+  ],
   "Tags": [],
   "Title": "Umbraco Geolocation Coordinates",
   "VersionDependencyMode": "Default",

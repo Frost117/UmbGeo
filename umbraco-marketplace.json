@@ -15,11 +15,11 @@
   "PackageType": "Package",
   "Screenshots": [
     {
-      "ImageUrl": "https://raw.githubusercontent.com/Frost117/UmbGeo/refs/heads/main/.github/screenshots/BackofficeEditor.png",
+      "ImageUrl": "https://i.imgur.com/CH9IxsL.png",
       "Caption": "Umbraco Geolocation Coordinates Property Editor"
     },
     {
-      "ImageUrl": "https://raw.githubusercontent.com/Frost117/UmbGeo/refs/heads/main/.github/screenshots/BackofficeEditorValidation.png",
+      "ImageUrl": "https://i.imgur.com/OXsh3de.png",
       "Caption": "Umbraco Geolocation Coordinates Property Editor with validation"
     }
   ],

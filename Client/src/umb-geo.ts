@@ -135,9 +135,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             <uui-input
                 class="coordinate-input"
                 type="number"
-                step="0.0001"
-                min="-90"
+                step="0.000001"
                 max="90"
+                min="-90"
                 .value="${this.coordinates.latitude}"
                 @input="${(e: InputEvent) => this.#onInput(e, 'latitude')}"
                 @change="${(e: Event) => this.#onChange(e, 'latitude')}"
@@ -150,9 +150,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             <uui-input
                 class="coordinate-input"
                 type="number"
-                step="0.0001"
-                min="-180"
+                step="0.000001"
                 max="180"
+                min="-180"
                 .value="${this.coordinates.longitude}"
                 @input="${(e: InputEvent) => this.#onInput(e, 'longitude')}"
                 @change="${(e: Event) => this.#onChange(e, 'longitude')}"
@@ -165,7 +165,7 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             <uui-input
                 class="coordinate-input"
                 type="number"
-                step="0.0001"
+                step="0.000001"
                 max="8850"
                 min="-420"
                 placeholder="Elevation"

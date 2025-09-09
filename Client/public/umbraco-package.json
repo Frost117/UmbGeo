@@ -2,7 +2,7 @@
   "$schema": "../umbraco-package-schema.json",
   "id": "UmbGeo-Location",
   "name": "UmbGeo Location",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "allowPackageTelemetry": true,
   "extensions": [
     {
@@ -23,6 +23,12 @@
               "label": "Default geolocation value",
               "description": "The default geolocation value to use if no value is set",
               "propertyEditorUiAlias": "UmbGeo.Location"
+            },
+            {
+              "alias": "defaultLeafletMap",
+              "label": "Leaflet map",
+              "description": "Toggle to show / hide the leaflet map",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.Toggle"
             }
           ]
         }

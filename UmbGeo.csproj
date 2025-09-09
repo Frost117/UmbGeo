@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,7 +22,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <UmbracoCmsPackageVersion>[15.4.2, 15.999.999)</UmbracoCmsPackageVersion>
+    <UmbracoCmsPackageVersion>[16.0.0, 16.2.0)</UmbracoCmsPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,7 +42,7 @@
     <None Include="LICENSE" Pack="true" PackagePath="" />
     <None Include="logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
-  
+
   <!-- This target runs the Vite build before the .NET build, which populates the wwwroot folder -->
   <Target Name="NpmBuild" BeforeTargets="BeforeBuild" AfterTargets="ResolveReferences">
     <Message Text="Executing NPM build..." Importance="high" />

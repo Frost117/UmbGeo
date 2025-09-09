@@ -1,6 +1,7 @@
-import { LitElement, html, customElement, property } from '@umbraco-cms/backoffice/external/lit';
+import { LitElement, html, customElement, property, css, PropertyValueMap } from '@umbraco-cms/backoffice/external/lit';
+import { map, Map as LeafletMap, MapOptions, tileLayer, marker, Marker, latLng } from "leaflet";
 import { UmbElementMixin } from "@umbraco-cms/backoffice/element-api";
-import {  UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
+import { UmbPropertyEditorConfigCollection, UmbPropertyEditorUiElement } from '@umbraco-cms/backoffice/property-editor';
 import { UmbChangeEvent } from '@umbraco-cms/backoffice/event';
 import {UMB_AUTH_CONTEXT, UmbAuthContext} from "@umbraco-cms/backoffice/auth";
 
@@ -17,11 +18,20 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             console.warn('Attempted to set coordinates to undefined.');
         }
     }
+    @property({attribute: false})
+    public mapInstance?: LeafletMap;
+
+    @property({attribute: false})
+    public mapMarker?: Marker;
+
+    @property()
+    public mapOptions: MapOptions = {
+        zoom: 13,
+    }
     
     @property()
     public geoAuthToken: Promise<string> | undefined
     
-
     @property({ attribute: false })
     public set config(config: UmbPropertyEditorConfigCollection | undefined) {
         if (!config) {
@@ -32,17 +42,27 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         // Retrieve the value of defaultGeolocation
         const defaultCoordinatesConfigValue: { latitude: number; longitude: number; elevation: number } | undefined =
             config.getValueByAlias("defaultGeolocation");
-
+        
         if (defaultCoordinatesConfigValue) {
-            // Check if any of the fields are empty or invalid, and fall back to defaultCoordinatesConfigValue
+            // Check if any of the fields are empty or invalid and fall back to defaultCoordinatesConfigValue
             this.coordinates = {
                 latitude: this.coordinates.latitude || defaultCoordinatesConfigValue.latitude,
                 longitude: this.coordinates.longitude || defaultCoordinatesConfigValue.longitude,
                 elevation: this.coordinates.elevation || defaultCoordinatesConfigValue.elevation,
             };
+            
         } else {
             console.warn('defaultGeolocation not found. Using existing coordinates:', this.coordinates);
         }
+
+        // Retrieve and set the map visibility toggle
+        const defaultMapToggleConfigValue: boolean | undefined = config.getValueByAlias("defaultLeafletMap");
+
+        // If the value is a boolean (true or false), use it. Otherwise, fall back to a default (e.g., false).
+        this.showMap = typeof defaultMapToggleConfigValue === 'boolean' ? defaultMapToggleConfigValue : false;
+        
+        console.log('map value is here',this.showMap)
+        
     }
     @property({ type: Boolean })
     private _validationState: { isLatitudeValid: boolean; isLongitudeValid: boolean; isElevationValid: boolean, isValid: boolean } = {
@@ -58,6 +78,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         longitude: 0,
         elevation: 0,
     };
+
+    @property({ type: Boolean })
+    public showMap: boolean = false;
     
     private _authContext: UmbAuthContext | undefined;
 
@@ -97,8 +120,47 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             }
         } )
     }
+
+    protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        super.firstUpdated(_changedProperties);
+        if (this.showMap) {
+            this.initializeMap();
+        }
+    }
+
+    protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        super.updated(_changedProperties);
+        if (this.showMap && !this.mapInstance) {
+            this.initializeMap();
+        }
+
+        if (_changedProperties.has('coordinates') && this.mapInstance) {
+            const newLatLng = latLng(this.coordinates.latitude, this.coordinates.longitude);
+            this.mapInstance.setView(newLatLng);
+            if (this.mapMarker) {
+                this.mapMarker.setLatLng(newLatLng);
+            } else {
+                this.mapMarker = marker(newLatLng).addTo(this.mapInstance);
+            }
+        }
+    }
+
+    private initializeMap() {
+        const mapElement = this.shadowRoot?.querySelector('#map');
+        if (mapElement && !this.mapInstance) {
+            const initialLatLng = latLng(this.coordinates.latitude, this.coordinates.longitude);
+            this.mapInstance = map(mapElement as HTMLElement, { ...this.mapOptions, center: initialLatLng });
+            tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(this.mapInstance);
+            this.mapMarker = marker(initialLatLng).addTo(this.mapInstance);
+        }
+    }
+    
     render() {
         return html`
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <style>
             .error-message {
                 display: inline; /* Make the <p> tag inline */
@@ -130,53 +192,69 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
             .coordinate{
                 padding-bottom: 2px;
             }
+            .coordinates-container {
+                padding-bottom: 12px;
+            }
+            .leaflet-container {
+                height: 400px;
+            }
         </style>
-        <div class="coordinate">
-            <uui-input
-                class="coordinate-input"
-                type="number"
-                step="0.000001"
-                max="90"
-                min="-90"
-                .value="${this.coordinates.latitude}"
-                @input="${(e: InputEvent) => this.#onInput(e, 'latitude')}"
-                @change="${(e: Event) => this.#onChange(e, 'latitude')}"
-                .error="${!this._validationState.isLatitudeValid}"
-            ><div class="extra" slot="prepend">Latitude</div>
-            </uui-input>
-            ${!this._validationState.isLatitudeValid ? html`<p class="error-message">Latitude must be between -90 and 90.</p>` : ''}
+        <div class="coordinates-container">
+            <div class="coordinate">
+                <uui-input
+                    class="coordinate-input"
+                    type="number"
+                    step="0.000001"
+                    max="90"
+                    min="-90"
+                    .value="${this.coordinates.latitude}"
+                    @input="${(e: InputEvent) => this.#onInput(e, 'latitude')}"
+                    @change="${(e: Event) => this.#onChange(e, 'latitude')}"
+                    .error="${!this._validationState.isLatitudeValid}"
+                ><div class="extra" slot="prepend">Latitude</div>
+                </uui-input>
+                ${!this._validationState.isLatitudeValid ? html`<p class="error-message">Latitude must be between -90 and 90.</p>` : ''}
+            </div>
+            <div class="coordinate">
+                <uui-input
+                    class="coordinate-input"
+                    type="number"
+                    step="0.000001"
+                    max="180"
+                    min="-180"
+                    .value="${this.coordinates.longitude}"
+                    @input="${(e: InputEvent) => this.#onInput(e, 'longitude')}"
+                    @change="${(e: Event) => this.#onChange(e, 'longitude')}"
+                    .error="${!this._validationState.isLongitudeValid}"
+                ><div class="extra" slot="prepend">Longitude</div>
+                </uui-input>
+                ${!this._validationState.isLongitudeValid ? html`<p class="error-message">Latitude must be between -180 and 180.</p>` : ''}
+            </div>
+            <div class="coordinate">
+                <uui-input
+                    class="coordinate-input"
+                    type="number"
+                    step="0.000001"
+                    max="8850"
+                    min="-420"
+                    placeholder="Elevation"
+                    .value="${this.coordinates.elevation}"
+                    @input="${(e: InputEvent) => this.#onInput(e, 'elevation')}"
+                    @change="${(e: Event) => this.#onChange(e, 'elevation')}"
+                    .error="${!this._validationState.isElevationValid}"
+                ><div class="extra" slot="prepend">Elevation</div>
+                </uui-input>
+                ${!this._validationState.isElevationValid ? html`<p class="error-message">Elevation must be between -420 and 8850.</p>` : ''}
+            </div>
         </div>
-        <div class="coordinate">
-            <uui-input
-                class="coordinate-input"
-                type="number"
-                step="0.000001"
-                max="180"
-                min="-180"
-                .value="${this.coordinates.longitude}"
-                @input="${(e: InputEvent) => this.#onInput(e, 'longitude')}"
-                @change="${(e: Event) => this.#onChange(e, 'longitude')}"
-                .error="${!this._validationState.isLongitudeValid}"
-            ><div class="extra" slot="prepend">Longitude</div>
-            </uui-input>
-            ${!this._validationState.isLongitudeValid ? html`<p class="error-message">Latitude must be between -180 and 180.</p>` : ''}
-        </div>
-        <div class="coordinate">
-            <uui-input
-                class="coordinate-input"
-                type="number"
-                step="0.000001"
-                max="8850"
-                min="-420"
-                placeholder="Elevation"
-                .value="${this.coordinates.elevation}"
-                @input="${(e: InputEvent) => this.#onInput(e, 'elevation')}"
-                @change="${(e: Event) => this.#onChange(e, 'elevation')}"
-                .error="${!this._validationState.isElevationValid}"
-            ><div class="extra" slot="prepend">Elevation</div>
-            </uui-input>
-            ${!this._validationState.isElevationValid ? html`<p class="error-message">Elevation must be between -420 and 8850.</p>` : ''}
-        </div>
+        ${this.showMap
+                ? html`
+                <div class="leaflet-container">
+                    <div id="map"></div>
+                </div>
+              `
+                : ''
+        }
         `;
     }
 

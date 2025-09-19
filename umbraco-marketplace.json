@@ -21,6 +21,14 @@
     {
       "ImageUrl": "https://i.imgur.com/OXsh3de.png",
       "Caption": "Umbraco Geolocation Coordinates Property Editor with validation"
+    },
+    {
+      "ImageUrl": "https://i.imgur.com/AZ7HPya.png",
+      "Caption": "Backoffice map view, with click to place pins and use current location"
+    },
+    {
+      "ImageUrl": "https://i.imgur.com/85mNhdL.png",
+      "Caption": "Geo Coordinates property settings, to toggle map, set default value and height"
     }
   ],
   "Tags": [],
@@ -28,7 +36,7 @@
   "VersionDependencyMode": "Default",
   "VersionSpecificPackageIds": [
     {
-      "UmbracoMajorVersion": 15,
+      "UmbracoMajorVersion": 16,
       "PackageId": "UmbGeo"
     }
   ]

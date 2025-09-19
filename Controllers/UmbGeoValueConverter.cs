@@ -17,7 +17,7 @@ public sealed class GeoCoordinatesConverter : IPropertyValueConverter
     
     public object ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview)
     { 
-        if (source == null) return null;
+        if (source == null) return null!;
          Coordinate converted = JsonConvert.DeserializeObject<Coordinate>(source.ToString()!)!;
          return converted ?? throw new NullReferenceException();
     }

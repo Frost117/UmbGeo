@@ -223,7 +223,7 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
                 <uui-input
                     class="coordinate-input"
                     type="number"
-                    step="0.000001"
+                    step="0.0000001"
                     min="${min}"
                     max="${max}"
                     .value="${this.coordinates[field]}"

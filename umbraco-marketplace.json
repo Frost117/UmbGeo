@@ -31,7 +31,7 @@
       "Caption": "Geo Coordinates property settings, to toggle map, set default value and height"
     }
   ],
-  "Tags": [],
+  "Tags": ["Property Editor", "Geolocation", "Coordinates", "Map", "Google Maps", "Leaflet", "Open Street Maps"],
   "Title": "Umbraco Geolocation Coordinates",
   "VersionDependencyMode": "Default",
   "VersionSpecificPackageIds": [

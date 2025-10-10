@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/_content/UmbGeo</StaticWebAssetBasePath>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
 

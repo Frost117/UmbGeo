@@ -68,9 +68,10 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         await this.validateCoordinates();
     }
 
-    private onChange(e: Event, field: keyof Coordinates) {
+    private async onChange(e: Event, field: keyof Coordinates) {
         const value = parseFloat((e.target as HTMLInputElement).value);
         this.coordinates = { ...this.coordinates, [field]: value };
+        await this.validateCoordinates();
         if (this.validationState.isValid) {
             this.dispatchEvent(new UmbChangeEvent());
         }
@@ -93,14 +94,18 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         }
     }
     
-    protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected async firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
         super.firstUpdated(_changedProperties);
-        if (this.showMap) this.initializeMap();
+        if (this.showMap) {
+            await this.initializeMap();
+        }
     }
 
-    protected updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
         super.updated(_changedProperties);
-        if (this.showMap && !this.mapHelper) this.initializeMap();
+        if (this.showMap && !this.mapHelper){
+            await this.initializeMap();
+        } 
         if (_changedProperties.has('coordinates')) this.mapHelper.updatePosition(this.coordinates);
         if (_changedProperties.has('mapHeight')) {
             setTimeout(() => this.mapHelper.refresh(), 100);

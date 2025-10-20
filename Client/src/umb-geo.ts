@@ -27,8 +27,10 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
     @property({ type: Object }) private validationState = {
         isLatitudeValid: true, isLongitudeValid: true, isElevationValid: true, isValid: true
     }
+
+    private _authContextReady: Promise<UmbAuthContext>;
+    private _authContextResolver!: (value: UmbAuthContext) => void;
     
-    private authContext: UmbAuthContext | undefined
     private mapHelper: MapHelper = new MapHelper()
 
     @property({ attribute: false })
@@ -52,6 +54,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
 
     constructor() {
         super();
+        this._authContextReady = new Promise((resolve) => {
+            this._authContextResolver = resolve;
+        });
         this.setupLeafletIcons();
         this.setupAuthContext();
     }
@@ -123,9 +128,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
 
     private setupAuthContext() {
         this.consumeContext(UMB_AUTH_CONTEXT, (context: UmbAuthContext | undefined) => {
-            this.authContext = context;
-            if (this.authContext) {
-                this.geoAuthToken = this.authContext.getLatestToken();
+            if(context) {
+                this._authContextResolver(context);
+                this.geoAuthToken = context.getLatestToken();
             }
         });
     }
@@ -149,18 +154,10 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
     }
 
     private async validateCoordinates() {
-        if (!this.authContext) {
-            await new Promise(resolve => {
-                this.consumeContext(UMB_AUTH_CONTEXT, (context) => {
-                    this.authContext = context;
-                    resolve(context);
-                });
-            });
-        }
-        if (!this.authContext) return;
+        const authContext = await this._authContextReady;
 
         try {
-            const token = await this.authContext.getLatestToken();
+            const token = await authContext.getLatestToken();
             const response = await fetch(
                 `/AreCoordinatesValid?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&elevation=${this.coordinates.elevation}`,
                 { headers: { Authorization: `Bearer ${token}` } }

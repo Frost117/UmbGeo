@@ -33,7 +33,7 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         isLatitudeValid: true, isLongitudeValid: true, isElevationValid: true, isValid: true
     }
 
-    private _authContextReady: Promise<UmbAuthContext>;
+    private readonly _authContextReady: Promise<UmbAuthContext>;
     private _authContextResolver!: (value: UmbAuthContext) => void;
     
     private mapHelper: MapHelper = new MapHelper()
@@ -62,10 +62,10 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         this.setupAuthContext();
     }
     
-    private onInput(e: InputEvent, field: keyof Coordinates) {
+    private async onInput(e: InputEvent, field: keyof Coordinates) {
         const value = parseFloat((e.target as HTMLInputElement).value);
         this.coordinates = { ...this.coordinates, [field]: value };
-        this.validateCoordinates();
+        await this.validateCoordinates();
     }
 
     private onChange(e: Event, field: keyof Coordinates) {
@@ -82,9 +82,8 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
 
     private async useCurrentLocation() {
         try {
-            const coords = await this.mapHelper.getCurrentLocation();
-            this.coordinates = coords;
-            this.validateCoordinates();
+            this.coordinates = await this.mapHelper.getCurrentLocation();
+            await this.validateCoordinates();
             if (this.validationState.isValid) {
                 this.dispatchEvent(new UmbChangeEvent());
             }
@@ -135,16 +134,16 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         });
     }
 
-    private initializeMap() {
+    private async initializeMap() {
         const mapElement = this.shadowRoot?.querySelector('#map') as HTMLElement;
         if (mapElement) {
             this.mapHelper.initializeMap(
                 mapElement,
                 this.coordinates,
                 this.mapOptions,
-                (coords: Coordinates) => {
+                async (coords: Coordinates) => {
                     this.coordinates = coords;
-                    this.validateCoordinates();
+                    await this.validateCoordinates();
                     if (this.validationState.isValid) {
                         this.dispatchEvent(new UmbChangeEvent());
                     }

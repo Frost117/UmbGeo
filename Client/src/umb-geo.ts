@@ -14,12 +14,17 @@ import { MapHelper, Coordinates } from './map-helper';
 @customElement('geo-location')
 export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMixin(LitElement) implements UmbPropertyEditorUiElement{
 
-    // Main properties
+    
+    private _valueHasBeenSet: boolean = false;
     public get value() { return this.coordinates }
-    public set value(value) { if (value) this.coordinates = value; }
+    public set value(value) {
+        if (value) {
+            this.coordinates = value;
+            this._valueHasBeenSet = true;
+        }
+    }
 
     @property() public mapOptions: MapOptions = { zoom: 13 }
-    @property() public geoAuthToken: Promise<string> | undefined
     @property({ type: Boolean }) public showMap: boolean = false
     @property({ type: Object }) public coordinates: Coordinates = { latitude: 0, longitude: 0, elevation: 0 }
     @property({ type: Number }) public mapHeight: number = 400;
@@ -37,13 +42,9 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
     public set config(config: UmbPropertyEditorConfigCollection | undefined) {
         if (!config) return;
 
-        const defaultCoords: { latitude: number; longitude: number; elevation: number } | undefined = config.getValueByAlias("defaultGeolocation");
-        if (defaultCoords) {
-            this.coordinates = {
-                latitude: this.coordinates.latitude || defaultCoords.latitude,
-                longitude: this.coordinates.longitude || defaultCoords.longitude,
-                elevation: this.coordinates.elevation || defaultCoords.elevation,
-            };
+        const defaultCoords: Coordinates | undefined = config.getValueByAlias("defaultGeolocation");
+        if (defaultCoords && !this._valueHasBeenSet) {
+            this.coordinates = { ...defaultCoords };
         }
         const defaultMapHeight = config.getValueByAlias("defaultMapHeight");
         this.mapHeight = typeof defaultMapHeight === 'number' ? defaultMapHeight : 400;
@@ -130,7 +131,6 @@ export default class UmbGeoLocationPropertyEditorUIElement extends UmbElementMix
         this.consumeContext(UMB_AUTH_CONTEXT, (context: UmbAuthContext | undefined) => {
             if(context) {
                 this._authContextResolver(context);
-                this.geoAuthToken = context.getLatestToken();
             }
         });
     }
